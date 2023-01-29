@@ -76,8 +76,8 @@ function Base64Encode-NFT_Image
 .Parameter 1: File path of the PNG image
 .Parameter 2: Width of the original image in pixels
 .Parameter 3: Height of the original image in pixels
-.Parameter 3: x-coordinate of the top-left tile
-.Parameter 3: y-coordinate of the top-left tile
+.Parameter 4: x-coordinate of the top-left tile
+.Parameter 5: y-coordinate of the top-left tile
 
 .EXAMPLE
    NFT_Image_Split "C:\Location_Of_File\Original.png" -Width 40 -Height 40 -X 6 -Y 30
