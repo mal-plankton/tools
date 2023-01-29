@@ -158,4 +158,4 @@ function NFT_Image_Split
 
 
 ## This is an example
-NFT_Image_Split "C:\Users\HSuke\Desktop\MoonPlace\Unsong\Unsong Logo 02.png" -Width 20 -Height 40 -X 13 -Y 26
+NFT_Image_Split "C:\Location_Of_File\Original.png" -Width 20 -Height 40 -X 13 -Y 26
