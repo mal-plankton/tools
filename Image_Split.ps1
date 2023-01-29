@@ -1,4 +1,5 @@
-﻿<#
+﻿<# - Base64Encode-NFT_Image
+
 .SYNOPSIS
    Creates the _tokenURI from a single PNG image for the MoonPlace NFT
 
@@ -36,6 +37,11 @@ function Base64Encode-NFT_Image
 
     Begin
     {
+        if (-not $(Test-Path $Image_Path)) {
+            Write-Host $("Can't find " + $Image_Path + "`'. Aborting script`n") -ForegroundColor Red
+            exit
+        }
+
         $Image_Folder = Split-Path -Path $Image_Path
     }
     Process
@@ -67,7 +73,8 @@ function Base64Encode-NFT_Image
 
 
 
-<#
+<# - NFT_Image_Split
+
 .SYNOPSIS
    Breaks down a rectangular PNG image into many smaller PNG images
 
@@ -78,7 +85,7 @@ function Base64Encode-NFT_Image
 
    This also calls Base64Encode-NFT_Image to make _tokenURI files for them
 
-.PARAMETER $Image_Path:  File path of the PNG image
+.PARAMETER $Image_Path:  Absolute file path of the PNG image
 .PARAMETER $Width:       Width of the original image in pixels
 .PARAMETER $Height:      Height of the original image in pixels
 .PARAMETER $X:           x-coordinate of the top-left tile
@@ -119,6 +126,11 @@ function NFT_Image_Split
 
     Begin
     {
+        if (-not $(Test-Path $Image_Path)) {
+            Write-Host $("Can't find " + $Image_Path + "`'. Aborting script`n") -ForegroundColor Red
+            exit
+        }
+
         Write-Host $("Splitting image: `'" + $Image_Path + "`'`n") -ForegroundColor Cyan
 
         # Size of each smaller split image
