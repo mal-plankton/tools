@@ -1,13 +1,16 @@
-<#
+﻿<#
 .SYNOPSIS
    Creates the _tokenURI from a single PNG image for the MoonPlace NFT
 
 .DESCRIPTION
    Given the path of an image file, it'll create a txt file containing the base64-encoded _tokenURI that can be used to upload the image to MoonPlace's contract
 
-.Parameter 1: File path of the PNG image
-.Parameter 2: x-coordinate of the tile
-.Parameter 3: y-coordinate of the tile
+.PARAMETER $Image_Path: File path of the PNG image
+.PARAMETER $x:          x-coordinate of the tile
+.PARAMETER $y:          y-coordinate of the tile
+
+.OUTPUTS
+   A text file of the _tokenURI output at location: $Image_Folder\$x, $y.txt
 
 .EXAMPLE
    Base64Encode-NFT_Image ".\Image_Name.png" -x 15 -y 20
@@ -38,7 +41,7 @@ function Base64Encode-NFT_Image
     Process
     {
         Write-Host $("Encoding: `'" + $Image_Path + "`'") -ForegroundColor Cyan
-        Write-Host "Position: [$x, $y]`n" -ForegroundColor Cyan
+        # Write-Host "Position: [$x, $y]`n" -ForegroundColor Cyan
 
         # Convert image to base64
         $encoded_img = "data:image/png;base64," + [convert]::ToBase64String((get-content $Image_Path -encoding byte))
@@ -53,6 +56,8 @@ function Base64Encode-NFT_Image
         $encoded_NFT = "data:application/json;base64," + [convert]::ToBase64String($encoded_NFT_JSON)
 
         $encoded_NFT > "$Image_Folder\$x, $y.txt"
+
+        Write-Host "File output: $Image_Folder\$x, $y.txt`n" -ForegroundColor Green
     }
     End
     {
@@ -73,11 +78,15 @@ function Base64Encode-NFT_Image
 
    This also calls Base64Encode-NFT_Image to make _tokenURI files for them
 
-.Parameter 1: File path of the PNG image
-.Parameter 2: Width of the original image in pixels
-.Parameter 3: Height of the original image in pixels
-.Parameter 4: x-coordinate of the top-left tile
-.Parameter 5: y-coordinate of the top-left tile
+.PARAMETER $Image_Path:  File path of the PNG image
+.PARAMETER $Width:       Width of the original image in pixels
+.PARAMETER $Height:      Height of the original image in pixels
+.PARAMETER $X:           x-coordinate of the top-left tile
+.PARAMETER $Y:           y-coordinate of the top-left tile
+
+.OUTPUTS
+   Multiple 10x10 .PNG images at $Image_Folder: $x, $y.png
+   Multiple _tokenURL outputs in text files at $Image_Folder: $x, $y.txt
 
 .EXAMPLE
    NFT_Image_Split "C:\Location_Of_File\Original.png" -Width 40 -Height 40 -X 6 -Y 30
@@ -110,7 +119,7 @@ function NFT_Image_Split
 
     Begin
     {
-        Write-Host $("Splitting image: `'" + $Image_Path + "`'") -ForegroundColor Cyan
+        Write-Host $("Splitting image: `'" + $Image_Path + "`'`n") -ForegroundColor Cyan
 
         # Size of each smaller split image
         $Size = 10
@@ -149,4 +158,4 @@ function NFT_Image_Split
 
 
 ## This is an example
-NFT_Image_Split "C:\Location_Of_File\Original.png" -Width 40 -Height 40 -X 6 -Y 30
+NFT_Image_Split "C:\Users\HSuke\Desktop\MoonPlace\Unsong\Unsong Logo 02.png" -Width 20 -Height 40 -X 13 -Y 26
