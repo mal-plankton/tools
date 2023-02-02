@@ -1,7 +1,37 @@
-﻿<# - Base64Encode-NFT_Image
+﻿<#
+
+::::Directions::::
+
+There are 2 PowerShell scripts.
+
+::Base64Encode-NFT_Image::
+
+- Creates the _tokenURI from a single 10 pixel x 10 pixel PNG image for the MoonPlace NFT
+- Requires you to provide a 10x10 PNG image, along with the NFT's tile location
+- If the pixel location begins at [234,345], then its tile location is [23,34]
+- It'll create a TXT file with the base64-encoded _tokenURI needed to write to the smart contract
+- Example: Base64Encode-NFT_Image ".\Image_Name.png" -x 15 -y 20
+
+::NFT_Image_Split::
+
+- This will take a larger image that is a multiple of 10 pixels x 10 pixels.
+- It'll create separate 10x10 image files and generate _tokenURI txt files with their base64 code.
+- You MUST provide the FULL path of the image file, not just the relative path
+- The image must be a multiple of 10x10, like 30x50
+- This script calls the other script (Base64Encode-NFT_Image) multiple times to generate separate TXT and image files for each 10x10 tile
+- Example: NFT_Image_Split "C:\Location_Of_File\Original.png" -Width 40 -Height 40 -X 6 -Y 30
+
+#>
+
+
+########################################
+########################################
+
+
+<# - Base64Encode-NFT_Image
 
 .SYNOPSIS
-   Creates the _tokenURI from a single PNG image for the MoonPlace NFT
+   Creates the _tokenURI from a single 10x10 PNG image for the MoonPlace NFT
 
 .DESCRIPTION
    Given the path of an image file, it'll create a txt file containing the base64-encoded _tokenURI that can be used to upload the image to MoonPlace's contract
